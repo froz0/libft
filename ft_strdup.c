@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 16:43:44 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/08 20:57:16 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/08 20:49:38 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/08 21:14:10 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
+#include "libft.h"
+#include <stdlib.h>
 
-# define LIBFT_H
-#include <string.h>
+char	*ft_strdup(const char *s1)
+{
+	char	*dest;
+	size_t	len;
 
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
-
-#endif
+	len = 0;
+	while (s1[len])
+		len++;
+	dest = (char *)malloc((len + 1) * sizeof(char));
+	dest[len] = '\0';
+	while (len--)
+		dest[len] = s1[len];
+	return (dest);
+}

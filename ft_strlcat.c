@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 20:49:38 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/09 12:59:53 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/09 19:45:40 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/10 00:15:29 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_strdup(const char *s1)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	char	*dest;
-	size_t	len;
+    const size_t srclen = ft_strlen(src);
+    const size_t dstlen = ft_strnlen(dst, dstsize);
 
-	len = 0;
-	while (s1[len])
-		len++;
-	dest = (char *)malloc((len + 1) * sizeof(char));
-	dest[len] = '\0';
-	while (len--)
-		dest[len] = s1[len];
-	return (dest);
+    if (dstlen == dstsize)
+		return dstsize+srclen;
+    if (srclen < dstsize-dstlen)
+        ft_memcpy(dst+dstlen, src, srclen+1);
+	else
+	{
+        ft_memcpy(dst+dstlen, src, dstsize-dstlen-1);
+        dst[dstsize-1] = '\0';
+    }
+    return dstlen + srclen;
 }
+

@@ -6,13 +6,15 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:24:41 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/10 00:10:14 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/16 18:45:56 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "libft.h"
 
 int		g_error = 0;
@@ -38,6 +40,8 @@ void	write_result(int index, int success, char *purpose)
 	printf("\n");
 }
 
+
+
 void	test_begin(char *name, char *desc)
 {
 	g_testset_e = 0;
@@ -48,9 +52,15 @@ void	test_begin(char *name, char *desc)
 
 void	test_end(void)
 {
+	char buffer[5];
 	printf("\n");
 	if (g_testset_s < g_testset_e + g_testset_s)
+	{
 		printf("\033[0;31m%i/%i: KO 🥺", g_testset_s , g_testset_s + g_testset_e);
+		printf("\n\033[0mPress enter to continue");
+		fflush(stdout);
+		read(0, buffer, sizeof(buffer));
+	}
 	else
 		printf("\033[0;32m%i/%i: OK 🥳", g_testset_s , g_testset_s + g_testset_e);
 	g_error += g_testset_e;
@@ -62,27 +72,42 @@ void	memcpy_testset(void)
 {
 	char str1[6] = "hello";
 	char str2[11] = "hello world";
+	char str3[50] = "hello\xf6world😄";
 	char ft_dst1[20];
 	char ft_dst2[20];
+	char ft_dst3[50];
 	char dst1[20];
 	char dst2[20];
+	char dst3[50];
 
 	test_begin("memcpy", "copy n byte of memory");
 	write_result(1, memcmp(memcpy(dst1, str1, 6), ft_memcpy(ft_dst1, str1, 6), 6) == 0, NULL);
 	write_result(2, memcmp(memcpy(dst2, str2, 10), ft_memcpy(ft_dst2, str2, 10), 10) == 0, NULL);
+	write_result(3, memcmp(memcpy(dst3, str3, 15), ft_memcpy(ft_dst3, str3, 15), 15) == 0, NULL);
 	test_end();
 }
 
-void	strlen_testset(void)
+void	memccpy_testset(void)
 {
-	char str1[] = "hello";
-	char str2[] = "hello world";
-	char str3[] = "";
+	char dst1[50] = "this text will be overwrited XD";
+	char ft_dst1[50] = "this text will be overwrited XD";
+	char dst2[50] = "this text will be overwrited XD";
+	char ft_dst2[50] = "this text will be overwrited XD";
+	char dst3[50] = "this text will be overwrited XD";
+	char ft_dst3[50] = "this text will be overwrited XD";
+	char dst4[50] = "this text will be overwrited XD";
+	char ft_dst4[50] = "this text will be overwrited XD";
 
-	test_begin("strlen", "find length of string");
-	write_result(1, ft_strlen(str1) == strlen(str1), "Test with \"hello\"");
-	write_result(2, ft_strlen(str2) == strlen(str2), "Test with \"hello world\"");
-	write_result(3, ft_strlen(str3) == strlen(str3), "Test with \"\"");
+	test_begin("memccpy", "copy string until character found");
+	write_result(1, memcmp(memccpy(dst1, "lorem ipsum dolor sit", 'i', 21),
+					ft_memccpy(ft_dst1, "lorem ipsum dolor sit", 'i', 21), 32) == 0, NULL);
+	write_result(2, memcmp(memccpy(dst2, "lorem ipsum dolor sit", 'l', 21),
+					ft_memccpy(ft_dst2, "lorem ipsum dolor sit", 'l', 21), 32) == 0, NULL);
+	write_result(3, memcmp(memccpy(dst3, "lorem ipsum dolor sit", 'd', 21),
+					ft_memccpy(ft_dst3, "lorem ipsum dolor sit", 'd', 21), 32) == 0, NULL);
+	write_result(4, memccpy(dst3, "yollloooo", 'd', 10) ==
+					ft_memccpy(ft_dst3, "yollloooo", 'd', 10), NULL);
+	write_result(5, memcmp(dst3, ft_dst3, 32) == 0, NULL);
 	test_end();
 }
 
@@ -107,53 +132,21 @@ void	strdup_testset(void)
 	test_end();
 }
 
-void	strcpy_testset(void)
+void	strlen_testset(void)
 {
-	char str1[6] = "hello";
-	char str2[13] = "hello world";
-	char str3[9] = "\0  hello";
-	char dst1[6];
-	char dst2[13];
-	char dst3[9];
-	char ft_dst1[6];
-	char ft_dst2[13];
-	char ft_dst3[9];
+	char str1[] = "hello";
+	char str2[] = "hello world";
+	char str3[] = "";
 
-	test_begin("strcpy", "strcpy() functions copy the string src to dst (including \nthe terminating 0 character)");
-	write_result(1, strcmp(strcpy(dst1, str1), ft_strcpy(ft_dst1, str1)) == 0, "Test with \"hello\"");
-	write_result(2, strcmp(str1, ft_dst1) == 0, "Test if the dest is well filled");
-	write_result(3, strcmp(strcpy(dst2, str2), ft_strcpy(ft_dst2, str2)) == 0, "Test with \"hello world\"");
-	write_result(4, strcmp(strcpy(dst3, str3), ft_strcpy(ft_dst3, str3)) == 0, "Test with \"0 hello\"");
+	test_begin("strlen", "find length of string");
+	write_result(1, ft_strlen(str1) == strlen(str1), "Test with \"hello\"");
+	write_result(2, ft_strlen(str2) == strlen(str2), "Test with \"hello world\"");
+	write_result(3, ft_strlen(str3) == strlen(str3), "Test with \"\"");
 	test_end();
 }
 
-void	strncpy_testset(void)
-{
-	char str1[6] = "hello";
-	char str2[12] = "hello word";
-	char str3[9] = "\0  hello";
-	char dst1[6];
-	char dst1_2[12];
-	char dst2[12];
-	char dst2_2[12];
-	char dst3[9];
-	char ft_dst1[6];
-	char ft_dst1_2[12];
-	char ft_dst2[12];
-	char ft_dst2_2[12];
-	char ft_dst3[9];
 
-	test_begin("strncpy", "strncpy() functions copy the string src to dst fill with 0 the left char");
-	write_result(1, memcmp(strncpy(dst1, str1, 6), ft_strncpy(ft_dst1,str1, 6) ,6) == 0, NULL);
-	write_result(2, memcmp(str1, ft_dst1, 6) == 0, "Test if the dest is well filled");
-	write_result(3, memcmp(strncpy(dst1_2, str1, 12), ft_strncpy(ft_dst1_2,str1, 12) , 12) == 0, NULL);
-	write_result(4, memcmp(strncpy(dst2, str2, 12), ft_strncpy(ft_dst2,str2, 12) , 12) == 0, NULL);
-	write_result(5, memcmp(strncpy(dst2_2, str2, 5), ft_strncpy(ft_dst2_2, str2, 5) , 5) == 0, NULL);
-	write_result(6, memcmp(strncpy(dst3, str3, 9), ft_strncpy(ft_dst3, str3, 9) , 9) == 0, NULL);
-	test_end();
-}
-
-void	strcat_testset(void)
+void	strlcat_testset(void)
 {
 	char str1[50] = "hello";
 	char str2[50] = "hello world";
@@ -164,14 +157,17 @@ void	strcat_testset(void)
 	char str1_2[] = "you";
 	char str2_2[] = "hahaha";
 	char str3_2[] = "hello";
-	test_begin("strcat", "The strcat functions append a copy of the string s2 to the end\nof s1, then add 0");
-	write_result(1, strcmp(strcat(str1, str1_2), ft_strcat(ft_str1, str1_2)) == 0, NULL);
-	write_result(2, strcmp(strcat(str2, str2_2), ft_strcat(ft_str2, str2_2)) == 0, NULL);
-	write_result(3, strcmp(strcat(str3, str3_2), ft_strcat(ft_str3, str3_2)) == 0, NULL);
+	test_begin("strlcat", "safe strncat");
+	write_result(1, strlcat(str1, str1_2, 4) == ft_strlcat(ft_str1, str1_2, 4), NULL);
+	write_result(2, strcmp(str1,ft_str1) == 0, NULL);
+	write_result(3, strlcat(str2, str2_2, 5) == ft_strlcat(ft_str2, str2_2, 5), NULL);
+	write_result(4, strcmp(str2, ft_str2) == 0, NULL);
+	write_result(5, strlcat(str3, str3_2, 10) == ft_strlcat(ft_str3, str3_2, 10), NULL);
+	write_result(6, strcmp(str3, ft_str3) == 0, NULL);
 	test_end();
 }
 
-void	strncat_testset(void)
+void	strlcpy_testset(void)
 {
 	char str1[50] = "hello";
 	char str2[50] = "hello world";
@@ -182,10 +178,214 @@ void	strncat_testset(void)
 	char str1_2[] = "you";
 	char str2_2[] = "hahaha";
 	char str3_2[] = "hello";
-	test_begin("strncat", "strncat same but i < n");
-	write_result(1, strcmp(strncat(str1, str1_2, 4), ft_strncat(ft_str1, str1_2, 4)) == 0, NULL);
-	write_result(2, strcmp(strncat(str2, str2_2, 5), ft_strncat(ft_str2, str2_2, 5)) == 0, NULL);
-	write_result(3, strcmp(strncat(str3, str3_2, 10), ft_strncat(ft_str3, str3_2, 10)) == 0, NULL);
+	test_begin("strlcpy", "safe strncpy");
+	write_result(1, strlcpy(str1, str1_2, 4) == ft_strlcpy(ft_str1, str1_2, 4), NULL);
+	write_result(2, strcmp(str1,ft_str1) == 0, NULL);
+	write_result(3, strlcpy(str2, str2_2, 5) == ft_strlcpy(ft_str2, str2_2, 5), NULL);
+	write_result(4, strcmp(str2, ft_str2) == 0, NULL);
+	write_result(5, strlcpy(str3, str3_2, 10) == ft_strlcpy(ft_str3, str3_2, 10), NULL);
+	write_result(6, strcmp(str3, ft_str3) == 0, NULL);
+	test_end();
+}
+
+void	strchr_testset(void)
+{
+	char str1[50] = "hello";
+	char str2[50] = "hello world";
+	test_begin("strchr", "locate character in string");
+	write_result(1, strchr(str1, 'l') == ft_strchr(str1, 'l'), NULL);
+	write_result(2, strchr(str1, '\0') == ft_strchr(str1, '\0'), NULL);
+	write_result(3, strchr(str2, 'd') == ft_strchr(str2, 'd'), NULL);
+	write_result(4, strchr(str2, 'h') == ft_strchr(str2, 'h'), NULL);
+	write_result(5, strchr(str2, 'x') == ft_strchr(str2, 'x'), NULL);
+	test_end();
+}
+
+void	strrchr_testset(void)
+{
+	char str1[50] = "hello";
+	char str2[50] = "hello world";
+	test_begin("strrchr", "locate character in string (last) ");
+	write_result(1, strrchr(str1, 'l') == ft_strrchr(str1, 'l'), NULL);
+	write_result(2, strrchr(str1, '\0') == ft_strrchr(str1, '\0'), NULL);
+	write_result(3, strrchr(str2, 'd') == ft_strrchr(str2, 'd'), NULL);
+	write_result(4, strrchr(str2, 'h') == ft_strrchr(str2, 'h'), NULL);
+	write_result(5, strrchr(str2, 'x') == ft_strrchr(str2, 'x'), NULL);
+	test_end();
+}
+
+void	strnstr_testset(void)
+{
+	char *h1 = "bonjour a tous les amis";
+	char *n1 = "a tous";
+	char *h2 = "bonjour a tous";
+	char *n2 = "la zone";
+	char *h3 = "bonjour toi !";
+	char *n3 = "";
+	char *h4 = "";
+	char *n4 = "oauiiiiis";
+	char *h5 = "yo la zonla zone";
+	char *n5 = "la zone";
+	char *h6 = "bonjour a tous les amis";
+	char *n6 = "les amis";
+	char *h7 = "bonjour a tous les amis";
+	char *n7 = "les amis";
+	char *h8 = "lorem ipsum dolor sit amet";
+	char *n8 = "dolor";
+	test_begin("strnstr", "locate a substring in a string with n limit");
+	write_result(1, strnstr(h1, n1, 25) == ft_strnstr(h1, n1, 25), NULL);
+	write_result(2, strnstr(h2, n2, 15) == ft_strnstr(h2, n2, 15), NULL);
+	write_result(3, strnstr(h3, n3, 14) == ft_strnstr(h3, n3, 14), NULL);
+	write_result(4, strnstr(h3, n3, 1) == ft_strnstr(h3, n3, 1), NULL);
+	write_result(5, strnstr(h3, n3, 0) == ft_strnstr(h3, n3, 0), NULL);
+	write_result(6, strnstr(h3, n3, 20) == ft_strnstr(h3, n3, 20), NULL);
+	write_result(7, strnstr(h4, n4, 20) == ft_strnstr(h4, n4, 20), NULL);
+	write_result(8, strnstr(h5, n5, 50) == ft_strnstr(h5, n5, 50), NULL);
+	write_result(9, strnstr(h5, n5, 3) == ft_strnstr(h5, n5, 3), NULL);
+	write_result(10, strnstr(h5, n5, 0) == ft_strnstr(h5, n5, 0), NULL);
+	write_result(11, strnstr(h6, n6, 3) == ft_strnstr(h6, n6, 3), NULL);
+	write_result(12, strnstr(h6, n6, 0) == ft_strnstr(h6, n6, 0), NULL);
+	write_result(13, strnstr(h6, n6, 2) == ft_strnstr(h6, n6, 2), NULL);
+	write_result(14, strnstr(h7, n7, 30) == ft_strnstr(h7, n7, 30), NULL);
+	write_result(15 , strnstr(h8, n8, 15) == ft_strnstr(h8, n8, 15), NULL);
+	test_end();
+}
+
+void	strncmp_testset(void)
+{
+	test_begin("strncmp", "compare strings");
+	write_result(1, strncmp("salut la zone", "salut la zone", 50) == ft_strncmp("salut la zone", "salut la zone", 50), NULL);
+	write_result(2, strncmp("salut la zona", "salut la zona", 50) == ft_strncmp("salut la zona", "salut la zona", 50), NULL);
+	write_result(3, strncmp("salut la zon", "salut la zone", 50) == ft_strncmp("salut la zon", "salut la zone", 50), NULL);
+	write_result(4, strncmp("salut la zone", "salut la zon", 50) == ft_strncmp("salut la zone", "salut la zon", 50), NULL);
+	write_result(5, strncmp("", "", 50) == ft_strncmp("", "", 50), NULL);
+	write_result(6, strncmp("aalut la zone", "salut la zone", 50) == ft_strncmp("aalut la zone", "salut la zone", 50), NULL);
+	write_result(7, strncmp("salut\0 lq zone", "salut\0 la zone", 50) == ft_strncmp("salut\0 lq zone", "salut\0 la zone", 50), NULL);
+	write_result(8, strncmp("salut la zone", "wouugdpoiwhdohf", 50) == ft_strncmp("salut la zone", "wouugdpoiwhdohf", 50), NULL);
+	write_result(9, strncmp("salut la zone", "wouugdpoiwhdohf", 10) == ft_strncmp("salut la zone", "wouugdpoiwhdohf", 10), NULL);
+	write_result(10, strncmp("salut la zone", "wouugdpoiwhdohf", 0) == ft_strncmp("salut la zone", "wouugdpoiwhdohf", 0), NULL);
+	write_result(11, strncmp("salut la zone", "wouugdpoiwhdohf", 1) == ft_strncmp("salut la zone", "wouugdpoiwhdohf", 1), NULL);
+	write_result(12, strncmp("salut la zone", "salut wouugdpoiwhdohf", 5) == ft_strncmp("salut la zone", "salut wouugdpoiwhdohf", 5), NULL);
+	write_result(13, strncmp("salut la zone", "salut wouugdpoiwhdohf", 4) == ft_strncmp("salut la zone", "salut wouugdpoiwhdohf", 4), NULL);
+	write_result(14, strncmp("salut la zone", "salut wouugdpoiwhdohf", 6) == ft_strncmp("salut la zone", "salut wouugdpoiwhdohf", 6), NULL);
+	test_end();
+}
+
+void	isalpha_testset(void)
+{
+	test_begin("isalpha", "alphabetic character test");
+	write_result(1, isalpha(101) == ft_isalpha(101), NULL);
+	write_result(2, isalpha(-101) == ft_isalpha(-101), NULL);
+	write_result(3, isalpha(0) == ft_isalpha(0), NULL);
+	write_result(4, isalpha(172) == ft_isalpha(172), NULL);
+	write_result(5, isalpha(173) == ft_isalpha(173), NULL);
+	write_result(6, isalpha('Z') == ft_isalpha('Z'), NULL);
+	write_result(7, isalpha('a') == ft_isalpha('a'), NULL);
+	write_result(8, isalpha('b') == ft_isalpha('b'), NULL);
+	write_result(9, isalpha('g') == ft_isalpha('g'), NULL);
+	test_end();
+}
+
+void	isnum_testset(void)
+{
+	test_begin("isnum", "numeric character test");
+	write_result(1, isdigit('a') == ft_isdigit('a'), NULL);
+	write_result(1, isdigit('0') == ft_isdigit('0'), NULL);
+	write_result(1, isdigit('9') == ft_isdigit('9'), NULL);
+	write_result(1, isdigit('5') == ft_isdigit('5'), NULL);
+	test_end();
+}
+
+void	isalnum_testset(void)
+{
+	test_begin("isalnum", "alphanum char test");
+	write_result(1, isalnum('a') == ft_isalnum('a'), NULL);
+	write_result(2, isalnum('A') == ft_isalnum('A'), NULL);
+	write_result(3, isalnum('z') == ft_isalnum('z'), NULL);
+	write_result(4, isalnum('Z') == ft_isalnum('Z'), NULL);
+	write_result(5, isalnum('0') == ft_isalnum('0'), NULL);
+	write_result(6, isalnum('9') == ft_isalnum('9'), NULL);
+	write_result(7, isalnum('@') == ft_isalnum('@'), NULL);
+	test_end();
+}
+
+void	isascii_testset(void)
+{
+	test_begin("isascii", "check if ascii");
+	write_result(1, isascii('a') == ft_isascii('a'), NULL);
+	write_result(2, isascii('A') == ft_isascii('A'), NULL);
+	write_result(3, isascii(0) == ft_isascii(0), NULL);
+	write_result(4, isascii(127) == ft_isascii(127), NULL);
+	write_result(5, isascii(128) == ft_isascii(128), NULL);
+	write_result(6, isascii(-65) == ft_isascii(-65), NULL);
+	test_end();
+}
+
+void	isprint_testset(void)
+{
+	test_begin("isprint", "check if printable");
+	write_result(1, isprint(' ') == ft_isprint(' '), NULL);
+	write_result(2, isprint('~') == ft_isprint('~'), NULL);
+	write_result(3, isprint('5') == ft_isprint('5'), NULL);
+	write_result(4, isprint('<') == ft_isprint('<'), NULL);
+	write_result(5, isprint('\n') == ft_isprint('\n'), NULL);
+	write_result(6, isprint('\t') == ft_isprint('\t'), NULL);
+	test_end();
+}
+
+void	toupper_testset(void)
+{
+	test_begin("toupper", "lower case to upper case letter conversion");
+	write_result(1, toupper('a') == ft_toupper('a'), NULL);
+	write_result(1, toupper('g') == ft_toupper('g'), NULL);
+	write_result(2, toupper('A') == ft_toupper('A'), NULL);
+	write_result(3, toupper(150) == ft_toupper(150), NULL);
+	write_result(4, toupper(-97) == ft_toupper(-97), NULL);
+	test_end();
+}
+
+void	tolower_testset(void)
+{
+	test_begin("tolower", "upper case to lower case letter conversion");
+	write_result(1, toupper('A') == ft_toupper('A'), NULL);
+	write_result(1, toupper('G') == ft_toupper('G'), NULL);
+	write_result(2, toupper('a') == ft_toupper('a'), NULL);
+	write_result(3, toupper(150) == ft_toupper(150), NULL);
+	write_result(4, toupper(-65) == ft_toupper(-65), NULL);
+	test_end();
+}
+
+void	memset_testset(void)
+{
+	char	b1[50];
+	char	ft_b1[50];
+	char	b2[50];
+	char	ft_b2[50];
+	test_begin("memset", "fill a byte string with a byte value");
+	write_result(1, memcmp(memset(b1 , 'a', 50),ft_memset(ft_b1 , 'a', 50), 40) == 0, NULL);
+	write_result(2, memcmp(memset(b1 , -35, 50),ft_memset(ft_b1 , -35, 50), 50) == 0, NULL);
+	write_result(3, memcmp(memset(b1 , ';', 10),ft_memset(ft_b1 , ';', 10), 10) == 0, NULL);
+	test_end();
+}
+
+void	bzero_testset(void)
+{
+	char str1[12] = "zumba cafew";
+	char ft_str1[12] = "zumba cafew";
+	char	b1[50];
+	char	ft_b1[50];
+	char	b2[50];
+	char	ft_b2[50];
+	test_begin("bzero","write zeroes to a byte string");
+	bzero(str1, (0));
+	ft_bzero(ft_str1, 0);
+	bzero(b1, 50);
+	ft_bzero(ft_b1, 50);
+	bzero(b2, 20);
+	ft_bzero(ft_b2, 20);
+	write_result(1, memcmp(str1, ft_str1, 12) == 0, NULL);
+	write_result(2, memcmp(b1, ft_b1, 50) == 0, NULL);
+	write_result(3, memcmp(b2, ft_b2, 20) == 0, NULL);
 	test_end();
 }
 
@@ -194,13 +394,25 @@ int		main(void)
 	int		success_rate;
 	printf("\033[1;32m===> Libft Test <===\n");
 	printf("\033[0;35mby tmatis\n\n");
+	memset_testset();
+	bzero_testset();
 	memcpy_testset();
+	memccpy_testset();
+	isalpha_testset();
+	isnum_testset();
+	isalnum_testset();
+	isascii_testset();
+	isprint_testset();
+	toupper_testset();
+	tolower_testset();
 	strlen_testset();
+	strlcat_testset();
+	strchr_testset();
 	strdup_testset();
-	strcpy_testset();
-	strncpy_testset();
-	strcat_testset();
-	strncat_testset();
+	strrchr_testset();
+	strlcpy_testset();
+	strnstr_testset();
+	strncmp_testset();
 	printf("\033[01;33m=== [RESULTS] ===\n");
 	printf("\033[0mTest total: %i\n\n", g_error + g_success);
 	success_rate = (g_success * 100 / (g_success + g_error));

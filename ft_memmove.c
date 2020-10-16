@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 20:49:38 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/10 17:12:24 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/16 18:55:10 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/16 19:02:59 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_strdup(const char *s1)
+void *ft_memmove(void *dst, const void *src, size_t len)
 {
-	char	*dest;
-	size_t	len;
+	char	*s1;
+	char	*s2;
 
-	len = 0;
-	while (s1[len])
-		len++;
-	dest = (char *)malloc((len + 1) * sizeof(char));
-	if (!dest)
-		return (NULL);
-	dest[len] = '\0';
-	while (len--)
-		dest[len] = s1[len];
-	return (dest);
-}
+	s1 = (char *)dst;
+	s2 = (char *)src;
+
+}:wq

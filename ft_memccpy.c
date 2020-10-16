@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/08 20:49:38 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/10 17:12:24 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/16 18:16:56 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/16 18:50:47 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_strdup(const char *s1)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char	*dest;
-	size_t	len;
+	size_t	i;
+	char	*s1;
+	char	*s2;
 
-	len = 0;
-	while (s1[len])
-		len++;
-	dest = (char *)malloc((len + 1) * sizeof(char));
-	if (!dest)
+	s1 = (char *)dst;
+	s2 = (char *)src;
+	i = 0;
+	while (i < n && s2[i] != (char)c)
+	{
+		s1[i] = s2[i];
+		i++;
+	}
+	if (i == n)
 		return (NULL);
-	dest[len] = '\0';
-	while (len--)
-		dest[len] = s1[len];
-	return (dest);
+	s1[i++] = (char)c;
+	return (&s1[i]);
 }

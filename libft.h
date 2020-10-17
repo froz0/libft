@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:43:44 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/17 18:52:14 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/17 20:14:17 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 size_t	ft_strlen(const char *s);
-size_t	ft_strnlen(const char *s, size_t maxlen);
 char	*ft_strdup(const char *s1);
 char	*ft_strcpy(char *dst, const char *src);
 char	*ft_strncpy(char *dst, const char *src, size_t len);

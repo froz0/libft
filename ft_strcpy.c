@@ -6,11 +6,11 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 13:51:55 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/09 14:29:14 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/17 18:42:07 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h" 
+#include "libft.h"
 
 char	*ft_strcpy(char *dst, const char *src)
 {

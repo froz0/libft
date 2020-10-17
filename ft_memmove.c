@@ -6,18 +6,27 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 18:55:10 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/16 19:02:59 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/17 00:27:47 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void *ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char	*s1;
-	char	*s2;
+	char	*cdst;
+	char	*csrc;
 
-	s1 = (char *)dst;
-	s2 = (char *)src;
-
-}:wq
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	if (csrc < cdst)
+	{
+		csrc += len;
+		cdst += len;
+		while (len--)
+			*--cdst = *--csrc;
+	}
+	else if (csrc != cdst)
+		ft_memcpy(cdst, csrc, len);
+	return (dst);
+}

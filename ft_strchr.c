@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 18:19:23 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/10 18:30:04 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/17 15:41:59 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	char	cc;
-
-	cc = (char)c;
 	while (1)
 	{
-		if (*s == cc)
+		if (*s == (char)c)
 			return ((char *)s);
 		else if (!*s)
 			return (NULL);

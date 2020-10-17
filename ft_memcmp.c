@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 19:45:40 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/17 18:49:18 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/17 15:55:07 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/17 16:32:09 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	const	size_t	srclen = ft_strlen(src);
-	const	size_t	dstlen = ft_strnlen(dst, dstsize);
+	char	unsigned	*cs1;
+	char	unsigned	*cs2;
 
-	if (dstlen == dstsize)
-		return (dstsize + srclen);
-	if (srclen < dstsize - dstlen)
-		ft_memcpy(dst + dstlen, src, srclen + 1);
-	else
+	if (!n)
+		return (0);
+	cs1 = (unsigned char *)s1;
+	cs2 = (unsigned char *)s2;
+	while (--n && *cs1 == *cs2)
 	{
-		ft_memcpy(dst + dstlen, src, dstsize - dstlen - 1);
-		dst[dstsize - 1] = '\0';
+		cs1++;
+		cs2++;
 	}
-	return (dstlen + srclen);
+	if (*cs1 < *cs2)
+		return (-1);
+	if (*cs1 > *cs2)
+		return (1);
+	return (0);
 }

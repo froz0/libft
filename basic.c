@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 19:24:41 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/16 18:45:56 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/17 18:33:18 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,21 @@ void	strdup_testset(void)
 	free(tofree1);
 	free(tofree2);
 	write_result(3, strcmp(tofree1 = strdup(str3), tofree2 = ft_strdup(str3)) == 0, "Test with \"0 hello\"");
+	free(tofree1);
+	free(tofree2);
+	test_end();
+}
+
+void	calloc_testset(void)
+{
+	void *tofree1;
+	void *tofree2;
+	test_begin("calloc", "memory allocation");
+	write_result(1, memcmp(tofree1 = calloc(10, sizeof(char)), tofree2 = ft_calloc(10, sizeof(char)), 10) == 0,  NULL);
+	write_result(2, memcmp(tofree1 = calloc(10, sizeof(int)), tofree2 = ft_calloc(10, sizeof(int)), 10) == 0,  NULL);
+	write_result(3, memcmp(tofree1 = calloc(1, sizeof(int)), tofree2 = ft_calloc(1, sizeof(int)), 1) == 0,  NULL);
+	write_result(4, memcmp(tofree1 = calloc(0, sizeof(int)), tofree2 = ft_calloc(0, sizeof(int)), 1) == 0,  NULL);
+	write_result(5, memcmp(tofree1 = calloc(4, 0), tofree2 = ft_calloc(4, 0), 1) == 0,  NULL);
 	free(tofree1);
 	free(tofree2);
 	test_end();
@@ -389,6 +404,75 @@ void	bzero_testset(void)
 	test_end();
 }
 
+void	memmove_testset(void)
+{
+	char dst0[50];
+	char ft_dst0[50];
+	char str0[16] = "bonjour la zone";
+	char str1[16] = "bonjour la zone";
+	char dst1[50];
+	char ft_dst1[50];
+	char dst2[50] = "test avec les overflooooooowwwwwwv";
+	char ft_dst2[50] = "test avec les overflooooooowwwwwwv";
+
+	test_begin("memmove", "copy byte string");
+	write_result(1, memcmp(memmove(dst0, str0, 16), ft_memmove(ft_dst0, str0, 16) ,16) == 0, NULL);
+	write_result(2, memcmp(memmove(dst1, str1, 16), ft_memmove(ft_dst1, str1, 16) ,16) == 0, NULL);
+	write_result(3, memcmp(memmove(dst2 + 5, dst2, 16), ft_memmove(ft_dst2 + 5, ft_dst2, 16), 34) == 0, NULL);
+	write_result(4, memcmp(memmove(dst2 + 5, dst2 + 8, 16), ft_memmove(ft_dst2 + 5, ft_dst2 + 8, 16), 34) == 0, NULL);
+	write_result(5, memcmp(memmove(dst2, dst2, 16), ft_memmove(ft_dst2, ft_dst2, 16), 16) == 0, NULL);
+	write_result(6, memcmp(memmove(dst2+10, dst2+2, 16), ft_memmove(ft_dst2 + 10, ft_dst2 + 2, 16), 16) == 0, NULL);
+	write_result(7, memcmp(memmove(dst2+10, dst2+2, 16), ft_memmove(ft_dst2 + 10, ft_dst2 + 2, 16), 1) == 0, NULL);
+	write_result(8, memcmp(memmove(dst2+10, dst2+2, 0), ft_memmove(ft_dst2 + 10, ft_dst2 + 2, 0), 1) == 0, NULL);
+	test_end();
+}
+
+void	memchr_testset(void)
+{
+	char str1[50] = "hello";
+	char str2[50] = "hello world";
+	test_begin("memchr", "locate byte in byte string");
+	write_result(1, memchr(str1, 'l', 5) == ft_memchr(str1, 'l', 5), NULL);
+	write_result(2, memchr(str1, '\0', 2) == ft_memchr(str1, '\0', 2), NULL);
+	write_result(3, memchr(str2, 'd', 5) == ft_memchr(str2, 'd', 5), NULL);
+	write_result(4, memchr(str2, 'h', 12) == ft_memchr(str2, 'h', 12), NULL);
+	write_result(5, memchr(str2, 'x', 12) == ft_memchr(str2, 'x', 12), NULL);
+	test_end();
+
+}
+
+void	memcmp_testset(void)
+{
+	test_begin("memcmp", "compare byte string");
+	write_result(1, memcmp("hello la zone", "hello la zone",14) == ft_memcmp("hello la zone", "hello la zone",14), NULL);
+	write_result(2, memcmp("hello \0a zone", "hello \0a zone",14) == ft_memcmp("hello \0a zone", "hello \0a zone",14), NULL);
+	write_result(3, memcmp("hello \0a zane", "hello \0a zone",14) == ft_memcmp("hello \0a zane", "hello \0a zone",14), NULL);
+	write_result(4, memcmp("qello la zane", "hello \0a zone",14) == ft_memcmp("qello la zane", "hello \0a zone",14), NULL);
+	write_result(5, memcmp("hello lh zane", "hello la zone",14) == ft_memcmp("hello lh zane", "hello la zone",14), NULL);
+	write_result(6, memcmp("hello lh zane", "hello la zone", 0) == ft_memcmp("hello lh zane", "hello la zone", 0), NULL);
+	test_end();
+}
+
+void	atoi_testset(void)
+{
+	test_begin("atoi", "convert ASCII string to integer");
+	write_result(1, atoi("10") == ft_atoi("10"), NULL);
+	write_result(2, atoi("42") == ft_atoi("42"), NULL);
+	write_result(3, atoi("4") == ft_atoi("4"), NULL);
+	write_result(4, atoi("-42") == ft_atoi("-42"), NULL);
+	write_result(5, atoi("2147483647") == ft_atoi("2147483647"), NULL);
+	write_result(6, atoi("-2147483648") == ft_atoi("2147483648"), NULL);
+	write_result(7, atoi("42aaa42") == ft_atoi("42aaa42"), NULL);
+	write_result(8, atoi("abc42") == ft_atoi("abc42"), NULL);
+	write_result(9, atoi("abc42") == ft_atoi("abc42"), NULL);
+	write_result(10, atoi("\t\t\n  42") == ft_atoi("\t\t\n  42"), NULL);
+	write_result(11, atoi("\t\t\n  -42") == ft_atoi("\t\t\n  -42"), NULL);
+	write_result(12, atoi("\t\t\n  --42") == ft_atoi("\t\t\n  --42"), NULL);
+	write_result(13, atoi("\t\t\n  +-42") == ft_atoi("\t\t\n  +-42"), NULL);
+	write_result(14, atoi("+42") == ft_atoi("+42"), NULL);
+	test_end();
+}
+
 int		main(void)
 {
 	int		success_rate;
@@ -398,6 +482,10 @@ int		main(void)
 	bzero_testset();
 	memcpy_testset();
 	memccpy_testset();
+	memmove_testset();
+	memchr_testset();
+	memcmp_testset();
+	calloc_testset();
 	isalpha_testset();
 	isnum_testset();
 	isalnum_testset();
@@ -413,11 +501,12 @@ int		main(void)
 	strlcpy_testset();
 	strnstr_testset();
 	strncmp_testset();
-	printf("\033[01;33m=== [RESULTS] ===\n");
+	atoi_testset();
+	printf("\033[01;33m=== [RESULTS FIRST PART] ===\n");
 	printf("\033[0mTest total: %i\n\n", g_error + g_success);
 	success_rate = (g_success * 100 / (g_success + g_error));
 	if (success_rate == 100)
-		printf("\033[01;32m%i %%\nFabulous 🤯 test the bonus", success_rate);
+		printf("\033[01;32m%i %%\nFabulous 🤯", success_rate);
 	else if (success_rate >= 80)
 		printf("\033[01;32m%i %%\nGood 😜", success_rate);
 	else if (success_rate >= 60)

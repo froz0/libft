@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 22:53:10 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/13 17:31:05 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/26 16:26:25 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 
 	if (nlen == 0)
 		return ((char *)haystack);
-	while (*haystack && strncmp(haystack, needle, nlen) != 0 && len >= nlen)
+	while (*haystack && strncmp(haystack, needle, nlen) != 0 && len > nlen)
 	{
 		haystack++;
 		len--;

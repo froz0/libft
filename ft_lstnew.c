@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 23:14:59 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/26 16:16:50 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/26 15:11:45 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/26 15:26:00 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+t_list	*ft_lstnew(void *content)
 {
-	size_t	i;
-	char	*s1;
-	char	*s2;
+	t_list	*elem;
 
-	if (!dst && !src)
+	elem = (t_list *)malloc(sizeof(t_list));
+	if (!elem)
 		return (NULL);
-	s1 = (char *)dst;
-	s2 = (char *)src;
-	i = 0;
-	while (i < n)
-	{
-		s1[i] = s2[i];
-		i++;
-	}
-	return (dst);
+	elem->next = NULL;
+	elem->content = content;
+	return (elem);
 }

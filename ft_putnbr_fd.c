@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 23:14:59 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/26 16:16:50 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/26 12:05:34 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/26 13:03:02 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	ft_putnbr_fd(int n, int fd)
 {
-	size_t	i;
-	char	*s1;
-	char	*s2;
+	unsigned	int	un;
 
-	if (!dst && !src)
-		return (NULL);
-	s1 = (char *)dst;
-	s2 = (char *)src;
-	i = 0;
-	while (i < n)
+	if (n < 0)
 	{
-		s1[i] = s2[i];
-		i++;
+		ft_putchar_fd('-', fd);
+		un = -n;
 	}
-	return (dst);
+	else
+		un = n;
+	if (un > 9)
+	{
+		ft_putnbr_fd(un / 10, fd);
+		ft_putchar_fd((un % 10) + 48, fd);
+	}
+	else
+		ft_putchar_fd(un + 48, fd);
 }

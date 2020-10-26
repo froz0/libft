@@ -6,21 +6,11 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 19:45:40 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/17 20:14:08 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/20 21:49:24 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static	size_t	ft_strnlen(const char *s, size_t maxlen)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] && i < maxlen)
-		i++;
-	return (i);
-}
 
 size_t			ft_strlcat(char *dst, const char *src, size_t dstsize)
 {

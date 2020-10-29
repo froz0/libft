@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 20:12:48 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/17 18:50:31 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/28 14:14:02 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	const	size_t	srclen = ft_strlen(src);
+	size_t	srclen;
 
+	if (!dst || !src)
+		return (0);
+	srclen = ft_strlen(src);
 	if (srclen + 1 < dstsize)
 	{
 		ft_memcpy(dst, src, srclen + 1);

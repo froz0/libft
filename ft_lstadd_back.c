@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/23 12:13:02 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/28 14:10:35 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/26 20:22:27 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/26 20:28:06 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	size_t	cut;
+	t_list	*temp;
 
-	if (!s1 || !set)
-		return (NULL);
-	while (*s1 && ft_strchr(set, *s1))
-		s1++;
-	cut = ft_strlen(s1);
-	while (cut && ft_strchr(set, s1[cut]))
-		cut--;
-	return (ft_substr(s1, 0, cut + 1));
+	if (!*alst)
+	{
+		*alst = new;
+		return ;
+	}
+	temp = *alst;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }

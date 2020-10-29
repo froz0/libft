@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/23 12:13:02 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/28 14:10:35 by tmatis           ###   ########.fr       */
+/*   Created: 2020/10/26 20:07:50 by tmatis            #+#    #+#             */
+/*   Updated: 2020/10/26 20:10:24 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+void	ft_lstadd_front(t_list **alst, t_list *new)
 {
-	size_t	cut;
-
-	if (!s1 || !set)
-		return (NULL);
-	while (*s1 && ft_strchr(set, *s1))
-		s1++;
-	cut = ft_strlen(s1);
-	while (cut && ft_strchr(set, s1[cut]))
-		cut--;
-	return (ft_substr(s1, 0, cut + 1));
+	new->next = *alst;
+	*alst = new;
 }

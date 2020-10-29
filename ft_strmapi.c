@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:30:01 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/26 11:37:47 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/10/28 14:12:26 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char	*dest;
 	size_t	i;
 
+	if (!s || !f)
+		return (NULL);
 	dest = malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:43:44 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/28 14:02:53 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/11/16 12:38:55 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char			*ft_strnstr(const char *haystack, const char *needle,
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_isalpha(int c);
+int				ft_islower(int c);
 int				ft_isdigit(int c);
 int				ft_isalnum(int c);
 int				ft_isascii(int c);
@@ -72,5 +73,10 @@ void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 		void (*del)(void *));
+int				ft_str_is_alpha(char *str);
+int				ft_str_is_lowercase(char *str);
+int				ft_str_is_uppercase(char *str);
+int				ft_strequ(char *s1, char *s2);
+int				ft_isupper(int c);
 
 #endif

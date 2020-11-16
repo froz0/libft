@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/17 15:55:07 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/17 16:32:09 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/11/16 20:25:50 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,5 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n)
 		cs1++;
 		cs2++;
 	}
-	if (*cs1 < *cs2)
-		return (-1);
-	if (*cs1 > *cs2)
-		return (1);
-	return (0);
+	return (*cs1 - *cs2);
 }

@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 14:41:20 by tmatis            #+#    #+#             */
-/*   Updated: 2020/10/26 16:30:08 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/11/20 14:30:27 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ static	void	ft_compute(unsigned int n, char *dest, int len)
 char			*ft_itoa(int n)
 {
 	char			*dest;
-	int				sign;
 	int	const		len = ft_len(n);
 
-	sign = 1;
 	dest = (char *)malloc((len + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);

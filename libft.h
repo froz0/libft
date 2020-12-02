@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:43:44 by tmatis            #+#    #+#             */
-/*   Updated: 2020/11/22 17:34:51 by tmatis           ###   ########.fr       */
+/*   Updated: 2020/12/02 19:29:28 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char			*ft_strtrim(char const *s1, char const *set);
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-void			ft_putchar_fd(char c, int fd);
+void			ft_putchar_fd(int c, int fd);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
@@ -78,8 +78,9 @@ int				ft_str_is_lowercase(char *str);
 int				ft_str_is_uppercase(char *str);
 int				ft_strequ(char *s1, char *s2);
 int				ft_isupper(int c);
-int			ft_assert(int actual, char *behavior);
-int			ft_assert_cmp(int actual, int expected, char *behavior);
-int			ft_assert_strcmp(char *actual, char *expected, char *behavior);
-
+int				ft_assert(int actual, char *behavior);
+int				ft_assert_cmp(int actual, int expected, char *behavior);
+int				ft_assert_strcmp(char *actual, char *expected, char *behavior);
+int				ft_christr(const char *str, int c);
+int				ft_utf8_encode(int c, char *buff);
 #endif

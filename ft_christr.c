@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_christr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/26 11:56:01 by tmatis            #+#    #+#             */
-/*   Updated: 2020/12/02 19:49:34 by tmatis           ###   ########.fr       */
+/*   Created: 2020/11/25 18:24:12 by tmatis            #+#    #+#             */
+/*   Updated: 2020/11/25 18:30:40 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
 
-void	ft_putchar_fd(int c, int fd)
+int	ft_christr(const char *str, int c)
 {
-	char	buff[4];
-	int		len;
+	int		i;
 
-	len = ft_utf8_encode(c, buff);
-	write(fd, &c, len);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == (char)c)
+			return (i);
+		i++;
+	}
+	return (-1);
 }

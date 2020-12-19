@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_wstr_strlen.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/26 11:56:01 by tmatis            #+#    #+#             */
-/*   Updated: 2020/12/02 23:09:08 by tmatis           ###   ########.fr       */
+/*   Created: 2020/12/04 14:23:21 by tmatis            #+#    #+#             */
+/*   Updated: 2020/12/04 14:28:56 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
 
-void	ft_putchar_fd(int c, int fd)
+int		ft_wstr_strlen(int *wstr)
 {
 	char	buff[4];
-	int		len;
+	int		strlen;
+	int		buffed;
 
-	len = ft_utf8_encode(c, buff);
-	write(fd, buff, len);
+	strlen = 0;
+	while (*wstr)
+	{
+		buffed = ft_utf8_encode(*wstr++, buff);
+		strlen += buffed;
+	}
+	return (strlen);
 }

@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/26 11:56:01 by tmatis            #+#    #+#             */
-/*   Updated: 2020/12/02 23:09:08 by tmatis           ###   ########.fr       */
+/*   Created: 2020/12/04 12:09:06 by tmatis            #+#    #+#             */
+/*   Updated: 2020/12/13 16:56:04 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
+#include <stdlib.h>
 
-void	ft_putchar_fd(int c, int fd)
+void	*ft_realloc(void *src, size_t size, size_t addbyte)
 {
-	char	buff[4];
-	int		len;
+	char	*csrc;
+	char	*cdest;
 
-	len = ft_utf8_encode(c, buff);
-	write(fd, buff, len);
+	csrc = (char *)src;
+	cdest = (char *)malloc((size + addbyte) * sizeof(char));
+	ft_memcpy(cdest, csrc, size);
+	free(src);
+	return ((void *)cdest);
 }

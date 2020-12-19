@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_wstrnlen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/26 11:56:01 by tmatis            #+#    #+#             */
-/*   Updated: 2020/12/02 23:09:08 by tmatis           ###   ########.fr       */
+/*   Created: 2020/12/03 20:49:29 by tmatis            #+#    #+#             */
+/*   Updated: 2020/12/03 20:50:30 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
 
-void	ft_putchar_fd(int c, int fd)
+size_t	ft_wstrnlen(const int *s, size_t maxlen)
 {
-	char	buff[4];
-	int		len;
+	size_t	i;
 
-	len = ft_utf8_encode(c, buff);
-	write(fd, buff, len);
+	i = 0;
+	while (s[i] && i < maxlen)
+		i++;
+	return (i);
 }
